@@ -2,7 +2,6 @@ Parameters:
 
   PipelineID:
     Type: String
-    default: vinoth
 
 Resources:
 

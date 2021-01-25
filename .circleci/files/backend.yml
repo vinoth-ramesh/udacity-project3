@@ -5,8 +5,7 @@ Parameters:
   ID:
     Description: Unique identifier.
     Type: String
-    default: vinoth
-
+    
 Resources:
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
