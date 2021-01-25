@@ -264,7 +264,7 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Install AWS CLI dependencies
+          name: Install AWS CLI dependencies 
           working_directory: /tmp
           command: |
             sudo apt-get update && sudo apt-get install -yy less
