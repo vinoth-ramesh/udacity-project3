@@ -40,35 +40,64 @@ commands:
             
 jobs:
 
-  build-frontend:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys: [frontend-build]
-      - run:
-          name: Build front-end
-          command: |
-            npm run build
-      - save_cache:
-          paths: [frontend/node_modules]
-          key: frontend-build
-
   build-backend:
-    docker:
-      - image: circleci/node:13.8.0
+    executor: node
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      - attach_workspace:
+          at: .
       - run:
-          name: Back-end build
-          command: |
-             npm run build
-      - save_cache:
-          paths: [backend/node_modules]
-          key: backend-build
+          name: npm run build
+          working_directory: ./backend
+          command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - backend/dist
+
+
+  build-frontend:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: npm run build
+          working_directory: ./frontend
+          command: npm run build
+
+  # build-frontend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys: [frontend-build]
+  #     - run:
+  #         name: Build front-end
+  #         working_directory: ./frontend
+  #         command: |
+  #           npm run build
+  #     - save_cache:
+  #         paths: [frontend/node_modules]
+  #         key: frontend-build
+
+  # build-backend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys: [backend-build]
+  #     - run:
+  #         name: Back-end build
+  #         working_directory: ./backend
+  #         command: |
+  #            npm run build
+  #     - save_cache:
+  #         paths: [backend/node_modules]
+  #         key: backend-build
 
 #   test-frontend:
 #     docker:
