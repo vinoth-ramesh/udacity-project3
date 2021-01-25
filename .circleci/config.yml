@@ -10,7 +10,7 @@ executors:
   aws:
     docker:
       - image: amazon/aws-cli
-      
+
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -50,6 +50,33 @@ commands:
             fi
             
 jobs:
+
+  install-backend-dependencies:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          name: npm install
+          working_directory: ./backend
+          command: ls -la && npm install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - backend/node_modules
+
+
+  install-frontend-dependencies:
+   executor: node
+   steps:
+      - checkout
+      - run:
+          name: npm install
+          working_directory: ./frontend
+          command: ls -la && npm install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - frontend/node_modules
 
   build-backend:
     executor: node
@@ -311,8 +338,17 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
+      ## Install Dependencies
+      - install-backend-dependencies
+      - install-frontend-dependencies
+      ## Build
+      - build-backend:
+          requires:
+            - install-backend-dependencies
+      - build-frontend:
+          requires:
+            - install-frontend-dependencies
+      ## Test
       # - test-frontend:
       #     requires: [build-frontend]
       # - test-backend:
