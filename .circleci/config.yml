@@ -192,7 +192,7 @@ jobs:
           working_directory: ./.circleci/files
           command: |
             aws cloudformation deploy \
-              --template-file backend.yaml \
+              --template-file backend.yml \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
@@ -209,7 +209,7 @@ jobs:
           working_directory: ./.circleci/files
           command: |
             aws cloudformation deploy \
-              --template-file frontend.yaml \
+              --template-file frontend.yml \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
@@ -235,7 +235,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["06:55:19:5c:75:9c:0c:fa:5e:f0:ed:c4:2b:35:ec:76"]
+          fingerprints: ["99:21:a3:21:e0:c5:ba:a6:b9:1a:b7:9a:17:83:0e:41"]
       - attach_workspace:
           at: .
       - run:
@@ -467,7 +467,7 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-          
+
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
