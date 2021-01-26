@@ -314,7 +314,6 @@ jobs:
           command: |
             export API_URL=$(curl -H "token: 1e288415-cfc8-4a0a-a23c-087eb7cd7678" --request GET https://api.memstash.io/values/BACKEND_URL)
             echo "${API_URL}"
-            curl "$API_URL/api/status" -v
             npm run build
       - run:
           name: Deploy frontend objects to S3
@@ -382,7 +381,7 @@ jobs:
             export BACKEND_URL=$(curl -H "token: 1e288415-cfc8-4a0a-a23c-087eb7cd7678" --request GET https://api.memstash.io/values/BACKEND_URL)
             echo "${BACKEND_URL}"
             echo "$BACKEND_URL/api/status"
-            curl "$BACKEND_URL/api/status" -v
+          #  curl "$BACKEND_URL/api/status" -v
       - run:
           name: Frontend smoke test.
           working_directory: ./backend
