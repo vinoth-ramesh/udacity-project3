@@ -348,7 +348,6 @@ jobs:
             ansible --version
             pip install awscli
             aws --version
-            netstat -ln | grep 3030
       - run:
           name: Deploy backend
           working_directory: ./.circleci/ansible
