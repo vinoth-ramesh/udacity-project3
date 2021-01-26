@@ -1,6 +1,5 @@
 ---
-
-- name: "configuration play." 
+- name: Deploy backend components 
   hosts: all
   user: ubuntu
   gather_facts: false
